@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교토 여행 가이드 - 뚱띵 패밀리</title>
+    <link rel="stylesheet" href="kyoto-travel.css">
+</head>
+<body>
+    <!-- 배경 패턴 -->
+    <div class="bg-pattern"></div>
+    <div class="sakura-fall"></div>
+
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-decoration"></div>
+        <div class="header-content">
+            <div class="title-wrapper">
+                <h1 class="main-title">
+                    <span class="title-kanji">京都</span>
+                    <span class="title-text">교토 여행</span>
+                </h1>
+                <div class="family-name">뚱띵 패밀리</div>
+                <div class="subtitle">2026년 2월 16일 ~ 19일</div>
+            </div>
+        </div>
+        <div class="tori-gate"></div>
+    </header>
+
+    <!-- 네비게이션 -->
+    <nav class="nav-container">
+        <div class="nav-wrapper">
+            <button class="nav-btn active" data-section="overview">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">개요</span>
+            </button>
+            <button class="nav-btn" data-section="itinerary">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">일정</span>
+            </button>
+            <button class="nav-btn" data-section="attractions">
+                <span class="nav-icon">⛩️</span>
+                <span class="nav-text">관광지</span>
+            </button>
+            <button class="nav-btn" data-section="food">
+                <span class="nav-icon">🍱</span>
+                <span class="nav-text">맛집</span>
+            </button>
+            <button class="nav-btn" data-section="transport">
+                <span class="nav-icon">🚇</span>
+                <span class="nav-text">교통</span>
+            </button>
+            <button class="nav-btn" data-section="checklist">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">체크리스트</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-container">
+        <!-- 개요 섹션 -->
+        <section id="overview" class="content-section active">
+            <div class="section-title-wrapper">
+                <h2 class="section-title">여행 개요</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="box-icon">📅</div>
+                    <div class="box-content">
+                        <h3>여행 기간</h3>
+                        <p class="box-main">2026년 2월 16일 ~ 19일</p>
+                        <p class="box-sub">3박 4일</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="box-icon">👨‍👩‍👧‍👦</div>
+                    <div class="box-content">
+                        <h3>여행 인원</h3>
+                        <p class="box-main">4명</p>
+                        <p class="box-sub">김기정 · 김규담<br>박선옥 · 김기환</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="box-icon">🏨</div>
+                    <div class="box-content">
+                        <h3>숙소</h3>
+                        <p class="box-main">라젠트 호텔 교토 니조</p>
+                        <p class="box-sub">La'gent Hotel Kyoto Nijo<br>4성급</p>
+                        <p class="box-address">863-52 Juraku-cho, Kamigyo-ku<br>니조, 교토, 일본</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="box-icon">✈️</div>
+                    <div class="box-content">
+                        <h3>항공편</h3>
+                        <p class="box-main">인천 → 간사이 공항</p>
+                        <p class="box-sub">간사이 공항 도착 후<br>교토 이동</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="box-icon">🌡️</div>
+                    <div class="box-content">
+                        <h3>날씨</h3>
+                        <p class="box-main">3~10°C</p>
+                        <p class="box-sub">따뜻한 외투 필수</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-box">
+                <div class="intro-decoration">🌸</div>
+                <h3>교토 소개</h3>
+                <p>
+                    교토는 일본의 옛 수도로, 1,000년 이상의 역사를 가진 도시입니다. 
+                    전통 사원과 신사, 아름다운 정원, 그리고 계절마다 다른 아름다운 풍경을 자랑합니다. 
+                    뚱띵 패밀리와 함께 일본의 전통 문화를 체험하고, 맛있는 음식을 즐길 수 있는 특별한 여행이 될 것입니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 일정표 섹션 -->
+        <section id="itinerary" class="content-section">
+            <div class="section-title-wrapper">
+                <h2 class="section-title">상세 일정</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="date-day">16</span>
+                        <span class="date-month">2월 (일)</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>도착 & 시내 둘러보기</h3>
+                        <div class="timeline-details">
+                            <div class="time-slot">
+                                <span class="time">오전</span>
+                                <p>간사이 공항 도착 → 교토 이동 (약 1시간 30분)</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">오후</span>
+                                <p>라젠트 호텔 교토 니조 체크인 후 교토역 근처 둘러보기</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">저녁</span>
+                                <p>교토역 근처 레스토랑에서 저녁 식사</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="date-day">17</span>
+                        <span class="date-month">2월 (월)</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>동부 교토 탐방</h3>
+                        <div class="timeline-details">
+                            <div class="time-slot">
+                                <span class="time">오전</span>
+                                <p>기요미즈데라(清水寺) 방문</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">오후</span>
+                                <p>산넨자카/니넨자카 거리 산책, 야사카 신사(八坂神社)</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">저녁</span>
+                                <p>기온 거리에서 전통 요리 체험</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="date-day">18</span>
+                        <span class="date-month">2월 (화)</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>북부 교토 & 아라시야마</h3>
+                        <div class="timeline-details">
+                            <div class="time-slot">
+                                <span class="time">오전</span>
+                                <p>아라시야마 대나무 숲, 덴류지(天龍寺)</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">오후</span>
+                                <p>긴카쿠지(金閣寺) 방문</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">저녁</span>
+                                <p>아라시야마 지역에서 식사</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        <span class="date-day">19</span>
+                        <span class="date-month">2월 (수)</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>서부 교토 & 출발</h3>
+                        <div class="timeline-details">
+                            <div class="time-slot">
+                                <span class="time">오전</span>
+                                <p>후시미 이나리 신사(伏見稲荷大社) - 천 개의 토리이</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">오후</span>
+                                <p>호텔 체크아웃, 교토역 이스타 쇼핑</p>
+                            </div>
+                            <div class="time-slot">
+                                <span class="time">저녁</span>
+                                <p>간사이 공항 이동 → 인천 출발</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 관광지 섹션 -->
+        <section id="attractions" class="content-section">
+            <div class="section-title-wrapper">
+                <h2 class="section-title">주요 관광지</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="attractions-grid">
+                <div class="attraction-card" data-attraction="kiyomizu">
+                    <div class="card-header">
+                        <div class="card-emoji">⛩️</div>
+                        <div class="card-badge">사원</div>
+                    </div>
+                    <h3>기요미즈데라</h3>
+                    <p class="card-subtitle">清水寺</p>
+                    <p class="card-description">
+                        교토의 대표적인 사원으로, 특히 벚꽃과 단풍 시즌에 아름답습니다. 
+                        목조 건축물의 아름다움을 감상할 수 있습니다.
+                    </p>
+                    <div class="card-info">
+                        <span>📍 동부 교토</span>
+                        <span>⏰ 6:00 - 18:00</span>
+                    </div>
+                    <div class="card-click-hint">클릭하여 상세 정보 보기</div>
+                </div>
+
+                <div class="attraction-card" data-attraction="arashiyama">
+                    <div class="card-header">
+                        <div class="card-emoji">🎋</div>
+                        <div class="card-badge">자연</div>
+                    </div>
+                    <h3>아라시야마 대나무 숲</h3>
+                    <p class="card-subtitle">竹林の小径</p>
+                    <p class="card-description">
+                        울창한 대나무 숲으로 유명한 곳입니다. 산책하기 좋고 사진 찍기 최고의 장소입니다.
+                    </p>
+                    <div class="card-info">
+                        <span>📍 서부 교토</span>
+                        <span>⏰ 24시간</span>
+                    </div>
+                    <div class="card-click-hint">클릭하여 상세 정보 보기</div>
+                </div>
+
+                <div class="attraction-card" data-attraction="fushimi">
+                    <div class="card-header">
+                        <div class="card-emoji">🦊</div>
+                        <div class="card-badge">신사</div>
+                    </div>
+                    <h3>후시미 이나리 신사</h3>
+                    <p class="card-subtitle">伏見稲荷大社</p>
+                    <p class="card-description">
+                        천 개의 빨간 토리이(鳥居)가 이어지는 유명한 신사입니다. 
+                        인스타그램에서 가장 많이 찍히는 곳 중 하나입니다.
+                    </p>
+                    <div class="card-info">
+                        <span>📍 남부 교토</span>
+                        <span>⏰ 24시간</span>
+                    </div>
+                    <div class="card-click-hint">클릭하여 상세 정보 보기</div>
+                </div>
+
+                <div class="attraction-card" data-attraction="gion">
+                    <div class="card-header">
+                        <div class="card-emoji">🏮</div>
+                        <div class="card-badge">거리</div>
+                    </div>
+                    <h3>기온 거리</h3>
+                    <p class="card-subtitle">祇園</p>
+                    <p class="card-description">
+                        전통 기와집이 늘어선 거리로, 마이코를 볼 수 있는 곳입니다. 
+                        전통적인 일본의 모습을 체험할 수 있습니다.
+                    </p>
+                    <div class="card-info">
+                        <span>📍 동부 교토</span>
+                        <span>⏰ 24시간</span>
+                    </div>
+                    <div class="card-click-hint">클릭하여 상세 정보 보기</div>
+                </div>
+
+                <div class="attraction-card" data-attraction="kinkakuji">
+                    <div class="card-header">
+                        <div class="card-emoji">🏛️</div>
+                        <div class="card-badge">사원</div>
+                    </div>
+                    <h3>긴카쿠지</h3>
+                    <p class="card-subtitle">金閣寺</p>
+                    <p class="card-description">
+                        금박으로 덮인 아름다운 사원입니다. 정원과 연못이 어우러져 
+                        그림 같은 풍경을 만들어냅니다.
+                    </p>
+                    <div class="card-info">
+                        <span>📍 북부 교토</span>
+                        <span>⏰ 9:00 - 17:00</span>
+                    </div>
+                    <div class="card-click-hint">클릭하여 상세 정보 보기</div>
+                </div>
+
+                <div class="attraction-card" data-attraction="sannenzaka">
+                    <div class="card-header">
+                        <div class="card-emoji">🎎</div>
+                        <div class="card-badge">거리</div>
+                    </div>
+                    <h3>산넨자카/니넨자카</h3>
+                    <p class="card-subtitle">産寧坂・二寧坂</p>
+                    <p class="card-description">
+                        전통 기와집이 늘어선 언덕길입니다. 기념품 가게와 카페가 많아 
+                        산책하며 쇼핑하기 좋은 곳입니다.
+                    </p>
+                    <div class="card-info">
+                        <span>📍 동부 교토</span>
+                        <span>⏰ 9:00 - 18:00</span>
+                    </div>
+                    <div class="card-click-hint">클릭하여 상세 정보 보기</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 맛집 섹션 -->
+        <section id="food" class="content-section">
+            <div class="section-title-wrapper">
+                <h2 class="section-title">추천 맛집</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="food-container">
+                <div class="food-category">
+                    <div class="category-header">
+                        <span class="category-icon">🍱</span>
+                        <h3>전통 요리</h3>
+                    </div>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <h4>카이세키 요리</h4>
+                            <p>계절 재료를 활용한 정찬 코스 요리</p>
+                            <span class="price">15,000-30,000엔</span>
+                        </div>
+                        <div class="food-item">
+                            <h4>교토 스시</h4>
+                            <p>신선한 회와 초밥</p>
+                            <span class="price">3,000-8,000엔</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-category">
+                    <div class="category-header">
+                        <span class="category-icon">🍜</span>
+                        <h3>간단한 식사</h3>
+                    </div>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <h4>라멘</h4>
+                            <p>교토 스타일의 진한 국물 라멘</p>
+                            <span class="price">800-1,500엔</span>
+                        </div>
+                        <div class="food-item">
+                            <h4>우동</h4>
+                            <p>두툼한 면발의 우동</p>
+                            <span class="price">600-1,200엔</span>
+                        </div>
+                        <div class="food-item">
+                            <h4>돈부리</h4>
+                            <p>덮밥 요리 (규동, 가츠동 등)</p>
+                            <span class="price">800-1,500엔</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-category">
+                    <div class="category-header">
+                        <span class="category-icon">🍡</span>
+                        <h3>간식 & 디저트</h3>
+                    </div>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <h4>교토 와가시</h4>
+                            <p>계절별로 다른 모양과 맛의 전통 과자</p>
+                            <span class="price">500-2,000엔</span>
+                        </div>
+                        <div class="food-item">
+                            <h4>말차 아이스크림</h4>
+                            <p>교토 특산 말차를 활용한 아이스크림</p>
+                            <span class="price">300-500엔</span>
+                        </div>
+                        <div class="food-item">
+                            <h4>타이야키</h4>
+                            <p>붕어빵 같은 일본 전통 간식</p>
+                            <span class="price">150-300엔</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-icon">💡</div>
+                <div class="tip-content">
+                    <h4>맛집 팁</h4>
+                    <ul>
+                        <li>인기 맛집은 사전 예약이 필요할 수 있습니다</li>
+                        <li>점심 시간대(11:30-13:30)는 대기 시간이 길 수 있으니 시간 여유를 두세요</li>
+                        <li>교토역 근처에는 다양한 가격대의 레스토랑이 많습니다</li>
+                        <li>전통 거리(기온, 산넨자카)에는 카페와 디저트 가게가 많습니다</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 교통 섹션 -->
+        <section id="transport" class="content-section">
+            <div class="section-title-wrapper">
+                <h2 class="section-title">교통편 안내</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="transport-section">
+                <h3 class="subsection-title">공항 ↔ 교토</h3>
+                <div class="transport-grid">
+                    <div class="transport-card">
+                        <div class="transport-icon">🚄</div>
+                        <h4>하루카 익스프레스</h4>
+                        <p>간사이 공항에서 교토역까지 직행</p>
+                        <div class="transport-details">
+                            <div class="detail-item">
+                                <span class="detail-label">소요시간</span>
+                                <span class="detail-value">약 75분</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">요금</span>
+                                <span class="detail-value">약 3,600엔</span>
+                            </div>
+                        </div>
+                        <div class="transport-note">✅ 가장 편리하고 빠른 방법</div>
+                    </div>
+
+                    <div class="transport-card">
+                        <div class="transport-icon">🚌</div>
+                        <h4>리무진 버스</h4>
+                        <p>공항에서 교토 시내 주요 호텔까지</p>
+                        <div class="transport-details">
+                            <div class="detail-item">
+                                <span class="detail-label">소요시간</span>
+                                <span class="detail-value">약 90분</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">요금</span>
+                                <span class="detail-value">약 2,600엔</span>
+                            </div>
+                        </div>
+                        <div class="transport-note">✅ 큰 짐이 많을 때 편리</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transport-section">
+                <h3 class="subsection-title">교토 시내 교통</h3>
+                <div class="transport-grid">
+                    <div class="transport-card">
+                        <div class="transport-icon">🎫</div>
+                        <h4>교토 시 버스 1일권</h4>
+                        <p>시내 버스 무제한 이용</p>
+                        <div class="transport-details">
+                            <div class="detail-item">
+                                <span class="detail-label">요금</span>
+                                <span class="detail-value">600엔</span>
+                            </div>
+                        </div>
+                        <div class="transport-note">✅ 관광지 이동에 추천</div>
+                    </div>
+
+                    <div class="transport-card">
+                        <div class="transport-icon">🚇</div>
+                        <h4>지하철</h4>
+                        <p>교토 지하철 2개 노선</p>
+                        <div class="transport-details">
+                            <div class="detail-item">
+                                <span class="detail-label">요금</span>
+                                <span class="detail-value">210-350엔 (구간별)</span>
+                            </div>
+                        </div>
+                        <div class="transport-note">✅ 빠르지만 노선이 제한적</div>
+                    </div>
+
+                    <div class="transport-card">
+                        <div class="transport-icon">🚶</div>
+                        <h4>도보</h4>
+                        <p>시내 중심가 관광지</p>
+                        <div class="transport-details">
+                            <div class="detail-item">
+                                <span class="detail-label">거리</span>
+                                <span class="detail-value">10-30분</span>
+                            </div>
+                        </div>
+                        <div class="transport-note">✅ 건강하고 경제적인 방법</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-icon">💡</div>
+                <div class="tip-content">
+                    <h4>교통 팁</h4>
+                    <ul>
+                        <li><strong>IC 카드:</strong> ICOCA 또는 Suica 카드를 구매하면 편리합니다 (500엔 보증금 + 충전)</li>
+                        <li><strong>교토 버스 1일권:</strong> 하루에 3곳 이상 방문하면 경제적입니다</li>
+                        <li><strong>택시:</strong> 짐이 많거나 늦은 시간에는 택시도 고려해보세요 (기본 요금 약 500엔)</li>
+                        <li><strong>구글 맵스:</strong> 실시간 대중교통 정보 확인 가능</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 체크리스트 섹션 -->
+        <section id="checklist" class="content-section">
+            <div class="section-title-wrapper">
+                <h2 class="section-title">준비물 체크리스트</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="checklist-grid">
+                <div class="checklist-category">
+                    <h3>📄 서류</h3>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox"><span>여권 (유효기간 6개월 이상)</span></label></li>
+                        <li><label><input type="checkbox"><span>항공권 (출발/귀국)</span></label></li>
+                        <li><label><input type="checkbox"><span>숙소 예약 확인서</span></label></li>
+                        <li><label><input type="checkbox"><span>여행자 보험 증서</span></label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3>💳 금융</h3>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox"><span>신용카드 (해외 사용 가능)</span></label></li>
+                        <li><label><input type="checkbox"><span>현금 (엔화 일부)</span></label></li>
+                        <li><label><input type="checkbox"><span>환전 증서 (필요시)</span></label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3>📱 전자기기</h3>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox"><span>스마트폰 & 충전기</span></label></li>
+                        <li><label><input type="checkbox"><span>보조배터리</span></label></li>
+                        <li><label><input type="checkbox"><span>카메라 (선택)</span></label></li>
+                        <li><label><input type="checkbox"><span>어댑터 (일본은 A타입)</span></label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3>👕 의류</h3>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox"><span>일상복 (여행 일수만큼)</span></label></li>
+                        <li><label><input type="checkbox"><span>가벼운 외투/재킷</span></label></li>
+                        <li><label><input type="checkbox"><span>편한 신발 (걷기 좋은)</span></label></li>
+                        <li><label><input type="checkbox"><span>양말 & 속옷</span></label></li>
+                        <li><label><input type="checkbox"><span>우산 또는 우비 (비 대비)</span></label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3>🧴 개인용품</h3>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox"><span>치약, 칫솔</span></label></li>
+                        <li><label><input type="checkbox"><span>샴푸, 바디워시 (선택)</span></label></li>
+                        <li><label><input type="checkbox"><span>수건 (일부 호텔은 제공 안 함)</span></label></li>
+                        <li><label><input type="checkbox"><span>선크림</span></label></li>
+                        <li><label><input type="checkbox"><span>손소독제</span></label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3>💊 건강 & 기타</h3>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox"><span>상비약 (소화제, 진통제 등)</span></label></li>
+                        <li><label><input type="checkbox"><span>마스크</span></label></li>
+                        <li><label><input type="checkbox"><span>여권 복사본</span></label></li>
+                        <li><label><input type="checkbox"><span>여행 가이드북 (선택)</span></label></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="important-box">
+                <div class="important-icon">⚠️</div>
+                <div class="important-content">
+                    <h3>중요 사항</h3>
+                    <ul>
+                        <li><strong>비자:</strong> 한국인은 90일 이하 관광 목적 방문 시 비자 불필요</li>
+                        <li><strong>전압:</strong> 일본은 100V, 플러그는 A타입 (한국과 동일)</li>
+                        <li><strong>언어:</strong> 영어가 통하지 않는 곳이 많으니 번역 앱 준비 권장</li>
+                        <li><strong>매너:</strong> 사원/신사 방문 시 조용히, 사진 촬영 금지 구역 확인</li>
+                        <li><strong>현금:</strong> 많은 가게가 현금만 받으니 현금 준비 필수</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 관광지 상세 모달 -->
+    <div id="attractionModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="관광지 사진">
+            </div>
+            <div class="modal-body">
+                <h2 id="modalTitle"></h2>
+                <p id="modalSubtitle" class="modal-subtitle"></p>
+                <div class="modal-info">
+                    <span id="modalLocation"></span>
+                    <span id="modalHours"></span>
+                </div>
+                <div class="modal-description">
+                    <h3>상세 설명</h3>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-tips">
+                    <h3>💡 여행 팁</h3>
+                    <ul id="modalTips"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-text">🌸 즐거운 교토 여행 되세요! 🌸</div>
+            <div class="footer-subtext">뚱띵 패밀리</div>
+        </div>
+    </footer>
+
+    <script src="kyoto-travel.js"></script>
+</body>
+</html>

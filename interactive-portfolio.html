@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인터랙티브 포트폴리오 - 김기정</title>
+    <link rel="stylesheet" href="interactive-portfolio.css">
+</head>
+<body>
+    <!-- 3D 파티클 배경 -->
+    <canvas id="particleCanvas"></canvas>
+    
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">김기정</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">홈</a></li>
+                <li><a href="#about" class="nav-link">소개</a></li>
+                <li><a href="#skills" class="nav-link">기술</a></li>
+                <li><a href="#projects" class="nav-link">프로젝트</a></li>
+                <li><a href="#contact" class="nav-link">연락</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 메인 섹션 -->
+    <main>
+        <!-- 홈 섹션 -->
+        <section id="home" class="section hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">안녕하세요,</span><br>
+                        <span class="typing-text" id="typingText"></span>
+                    </h1>
+                    <p class="hero-description">
+                        새로운 도전을 좋아하고, 함께 성장하고 싶습니다.<br>
+                        창의적인 솔루션으로 세상을 더 나은 곳으로 만드는 개발자입니다.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+                        <a href="#contact" class="btn btn-secondary">연락하기</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card">
+                        <div class="card-content">
+                            <div class="profile-circle">
+                                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=faces" alt="프로필">
+                            </div>
+                            <div class="card-glow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 소개 섹션 -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p class="about-paragraph">
+                            개발자로서 끊임없이 학습하고 성장하는 것을 즐깁니다. 
+                            사용자 경험을 최우선으로 생각하며, 아름답고 직관적인 인터페이스를 만드는 것을 좋아합니다.
+                        </p>
+                        <p class="about-paragraph">
+                            최신 기술 트렌드를 주시하며, 실용적이고 효율적인 솔루션을 찾아내는 것이 제 강점입니다.
+                            팀과의 협업을 통해 더 나은 결과를 만들어내는 것을 추구합니다.
+                        </p>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="50">0</div>
+                                <div class="stat-label">프로젝트</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="3">0</div>
+                                <div class="stat-label">년 경력</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="100">0</div>
+                                <div class="stat-label">만족도</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 기술 섹션 -->
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title">Skills & Technologies</h2>
+                <div class="skills-grid">
+                    <div class="skill-card" data-skill="90">
+                        <div class="skill-icon">⚛️</div>
+                        <h3 class="skill-name">React</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90"></div>
+                        </div>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-card" data-skill="85">
+                        <div class="skill-icon">🎨</div>
+                        <h3 class="skill-name">JavaScript</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85"></div>
+                        </div>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="skill-card" data-skill="80">
+                        <div class="skill-icon">🚀</div>
+                        <h3 class="skill-name">Node.js</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80"></div>
+                        </div>
+                        <span class="skill-percent">80%</span>
+                    </div>
+                    <div class="skill-card" data-skill="88">
+                        <div class="skill-icon">💎</div>
+                        <h3 class="skill-name">TypeScript</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="88"></div>
+                        </div>
+                        <span class="skill-percent">88%</span>
+                    </div>
+                    <div class="skill-card" data-skill="75">
+                        <div class="skill-icon">🎯</div>
+                        <h3 class="skill-name">Python</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="75"></div>
+                        </div>
+                        <span class="skill-percent">75%</span>
+                    </div>
+                    <div class="skill-card" data-skill="92">
+                        <div class="skill-icon">✨</div>
+                        <h3 class="skill-name">CSS/SCSS</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="92"></div>
+                        </div>
+                        <span class="skill-percent">92%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 프로젝트 섹션 -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="project-overlay">
+                                <a href="#" class="project-link">보기</a>
+                                <a href="#" class="project-link">코드</a>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">풀스택 대시보드</h3>
+                            <p class="project-description">
+                                실시간 통계, 할 일 관리, 파일 업로드, 채팅 기능을 포함한 종합 대시보드 애플리케이션
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">Node.js</span>
+                                <span class="tag">Socket.io</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="project-overlay">
+                                <a href="#" class="project-link">보기</a>
+                                <a href="#" class="project-link">코드</a>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">인터랙티브 포트폴리오</h3>
+                            <p class="project-description">
+                                3D 파티클 효과와 부드러운 애니메이션을 활용한 모던한 포트폴리오 웹사이트
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">HTML5</span>
+                                <span class="tag">CSS3</span>
+                                <span class="tag">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="project-overlay">
+                                <a href="#" class="project-link">보기</a>
+                                <a href="#" class="project-link">코드</a>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">실시간 채팅 앱</h3>
+                            <p class="project-description">
+                                WebSocket을 활용한 실시간 다중 사용자 채팅 애플리케이션
+                            </p>
+                            <div class="project-tags">
+                                <span class="tag">Socket.io</span>
+                                <span class="tag">Express</span>
+                                <span class="tag">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 연락 섹션 -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p class="contact-description">
+                            새로운 프로젝트나 협업 기회에 대해 이야기하고 싶으시다면, 
+                            언제든지 연락주세요!
+                        </p>
+                        <div class="contact-methods">
+                            <a href="mailto:example@email.com" class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-details">
+                                    <h4>Email</h4>
+                                    <p>example@email.com</p>
+                                </div>
+                            </a>
+                            <a href="https://www.instagram.com" target="_blank" class="contact-item">
+                                <div class="contact-icon">📱</div>
+                                <div class="contact-details">
+                                    <h4>Instagram</h4>
+                                    <p>@yourhandle</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="이름" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="이메일" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="메시지" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">메시지 보내기</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 김기정. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="interactive-portfolio.js"></script>
+</body>
+</html>

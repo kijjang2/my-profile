@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>교토 가족여행 일정 | 뚱띵 패밀리</title>
+
+  <!-- Tailwind (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige: { 50:"#fbf8f3", 100:"#f6efe5", 200:"#eadcc7", 300:"#dcc7a8" },
+            brown: { 700:"#3b2a20", 800:"#2b1f18", 900:"#1f1611" },
+            ink:   { 900:"#0f0b08" }
+          },
+          boxShadow: {
+            soft: "0 18px 50px rgba(31, 22, 17, 0.18)",
+            card: "0 10px 30px rgba(31, 22, 17, 0.12)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --dur: 700ms;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+
+    /* Soft grain + vignette */
+    .grain:before{
+      content:"";
+      position:absolute; inset:0;
+      background-image: url("https://images.unsplash.com/photo-1526481280695-3c687fd5432c?auto=format&fit=crop&w=1200&q=40");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(0.95) contrast(1.05);
+      transform: scale(1.03);
+      z-index:-3;
+    }
+    .grain:after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(1000px 500px at 20% 10%, rgba(234,220,199,0.28), transparent 60%),
+        radial-gradient(900px 600px at 80% 30%, rgba(59,42,32,0.38), transparent 65%),
+        linear-gradient(to bottom, rgba(15,11,8,0.20), rgba(15,11,8,0.62));
+      z-index:-2;
+    }
+
+    /* Reveal animation */
+    .reveal{
+      opacity:0;
+      transform: translateY(14px);
+      filter: blur(6px);
+      transition: opacity var(--dur) var(--ease),
+                  transform var(--dur) var(--ease),
+                  filter var(--dur) var(--ease);
+      will-change: transform, opacity, filter;
+    }
+    .reveal.in{
+      opacity:1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    /* Stagger helpers */
+    .stagger > *{ opacity:0; transform: translateY(12px); filter: blur(6px); }
+    .stagger.in > *{
+      opacity:1; transform: translateY(0); filter: blur(0);
+      transition: opacity var(--dur) var(--ease),
+                  transform var(--dur) var(--ease),
+                  filter var(--dur) var(--ease);
+    }
+    .stagger.in > *:nth-child(1){ transition-delay: 0ms; }
+    .stagger.in > *:nth-child(2){ transition-delay: 80ms; }
+    .stagger.in > *:nth-child(3){ transition-delay: 160ms; }
+    .stagger.in > *:nth-child(4){ transition-delay: 240ms; }
+    .stagger.in > *:nth-child(5){ transition-delay: 320ms; }
+    .stagger.in > *:nth-child(6){ transition-delay: 400ms; }
+
+    /* “Page transition” overlay */
+    .wipe{
+      position: fixed;
+      inset: 0;
+      background: rgba(31, 22, 17, 0.88);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms var(--ease);
+      z-index: 60;
+    }
+    .wipe.show{ opacity: 1; }
+
+    /* Fancy underline */
+    .shine{
+      background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.6), rgba(255,255,255,0.2));
+      background-size: 200% 100%;
+      animation: shine 2.6s linear infinite;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    @keyframes shine{
+      0%{ background-position: 0% 50%; }
+      100%{ background-position: 200% 50%; }
+    }
+
+    /* Smooth card hover */
+    .lift{
+      transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+    }
+    .lift:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 18px 45px rgba(31,22,17,0.18);
+    }
+
+    /* Active nav dot */
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(234,220,199,0.55);
+      transition: transform 200ms var(--ease), background 200ms var(--ease);
+    }
+    .dot.active{
+      transform: scale(1.35);
+      background: rgba(234,220,199,0.95);
+    }
+  </style>
+</head>
+
+<body class="bg-beige-50 text-brown-900">
+  <!-- Transition overlay -->
+  <div id="wipe" class="wipe"></div>
+
+  <!-- Top progress bar -->
+  <div class="fixed top-0 left-0 right-0 z-50">
+    <div class="h-[3px] bg-brown-900/10">
+      <div id="progress" class="h-[3px] bg-brown-800 w-0"></div>
+    </div>
+  </div>
+
+  <!-- Floating side navigation (desktop) -->
+  <aside class="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-40">
+    <div class="flex flex-col gap-3 bg-white/70 border border-brown-900/10 shadow-card backdrop-blur rounded-2xl p-3">
+      <button class="navBtn group flex items-center gap-3 text-left" data-target="#hero">
+        <span class="dot"></span><span class="text-xs text-brown-700 group-hover:text-brown-900">시작</span>
+      </button>
+      <button class="navBtn group flex items-center gap-3 text-left" data-target="#flight">
+        <span class="dot"></span><span class="text-xs text-brown-700 group-hover:text-brown-900">항공</span>
+      </button>
+      <button class="navBtn group flex items-center gap-3 text-left" data-target="#hotel">
+        <span class="dot"></span><span class="text-xs text-brown-700 group-hover:text-brown-900">숙소</span>
+      </button>
+      <button class="navBtn group flex items-center gap-3 text-left" data-target="#party">
+        <span class="dot"></span><span class="text-xs text-brown-700 group-hover:text-brown-900">여행 구성</span>
+      </button>
+      <button class="navBtn group flex items-center gap-3 text-left" data-target="#itinerary">
+        <span class="dot"></span><span class="text-xs text-brown-700 group-hover:text-brown-900">일정</span>
+      </button>
+      <button class="navBtn group flex items-center gap-3 text-left" data-target="#food">
+        <span class="dot"></span><span class="text-xs text-brown-700 group-hover:text-brown-900">맛집</span>
+      </button>
+      <button class="navBtn group flex items-center gap-3 text-left" data-target="#tips">
+        <span class="dot"></span><span class="text-xs text-brown-700 group-hover:text-brown-900">팁</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Top bar (mobile/desktop) -->
+  <header class="sticky top-[3px] z-40 bg-beige-50/80 backdrop-blur border-b border-brown-900/10">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-xl bg-brown-900 text-beige-100 grid place-items-center shadow-card">
+          <!-- map icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 20l-5 2V6l5-2 6 2 5-2v16l-5 2-6-2z"/><path d="M9 4v16"/><path d="M15 6v16"/>
+          </svg>
+        </div>
+        <div class="leading-tight">
+          <div class="text-sm font800 font-extrabold">뚱띵 패밀리의 교토 여행기</div>
+          <div class="text-xs text-brown-700">2026.02.16 ~ 2026.02.19</div>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-2">
+        <button class="navBtn px-3 py-2 rounded-xl bg-white border border-brown-900/10 shadow-card text-sm hover:bg-beige-50"
+          data-target="#itinerary">일정 보기</button>
+        <button class="navBtn px-3 py-2 rounded-xl bg-brown-900 text-beige-100 shadow-card text-sm hover:opacity-95"
+          data-target="#tips">여행 팁</button>
+      </div>
+
+      <button id="mobileMenuBtn" class="md:hidden px-3 py-2 rounded-xl bg-white border border-brown-900/10 shadow-card text-sm">
+        메뉴
+      </button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-brown-900/10 bg-white/85 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 py-3 grid grid-cols-2 gap-2">
+        <button class="navBtn px-3 py-2 rounded-xl bg-beige-50 border border-brown-900/10 text-sm" data-target="#flight">항공</button>
+        <button class="navBtn px-3 py-2 rounded-xl bg-beige-50 border border-brown-900/10 text-sm" data-target="#hotel">숙소</button>
+        <button class="navBtn px-3 py-2 rounded-xl bg-beige-50 border border-brown-900/10 text-sm" data-target="#party">여행 구성</button>
+        <button class="navBtn px-3 py-2 rounded-xl bg-beige-50 border border-brown-900/10 text-sm" data-target="#itinerary">일정</button>
+        <button class="navBtn px-3 py-2 rounded-xl bg-beige-50 border border-brown-900/10 text-sm" data-target="#food">맛집</button>
+        <button class="navBtn px-3 py-2 rounded-xl bg-beige-50 border border-brown-900/10 text-sm" data-target="#tips">팁</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero" class="relative overflow-hidden">
+    <div class="relative grain min-h-[72vh] flex items-end">
+      <div class="absolute inset-0 -z-10"></div>
+
+      <div class="mx-auto max-w-6xl px-4 pb-10 pt-14 w-full">
+        <div class="reveal">
+          <div class="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/20 px-4 py-2 text-white/90 text-sm">
+            <span class="opacity-90">📍</span>
+            <span>건축 · 자연 · 도시 산책</span>
+            <span class="text-white/50">·</span>
+            <span>하루 2만보 기본</span>
+          </div>
+
+          <h1 class="mt-5 text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+            교토 가족여행 일정
+          </h1>
+          <p class="mt-3 text-white/85 text-lg md:text-xl">
+            <span class="shine font-semibold">2026년 2월 16일 ~ 2월 19일</span> ·
+            <span class="text-white/80">라젠트 호텔 교토 니조</span>
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button class="navBtn px-5 py-3 rounded-2xl bg-beige-100 text-brown-900 font-semibold shadow-soft hover:bg-beige-200"
+              data-target="#itinerary">
+              일정 바로 보기
+            </button>
+            <button class="navBtn px-5 py-3 rounded-2xl bg-white/15 border border-white/25 text-white font-semibold hover:bg-white/20"
+              data-target="#flight">
+              항공/이동 정보
+            </button>
+          </div>
+
+          <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="rounded-2xl bg-white/10 border border-white/15 p-4 text-white lift">
+              <div class="text-sm text-white/70">가족 구성</div>
+              <div class="mt-1 font-bold">나 25 · 누나 28</div>
+              <div class="text-sm text-white/75">엄마 56 · 아빠 58</div>
+            </div>
+            <div class="rounded-2xl bg-white/10 border border-white/15 p-4 text-white lift">
+              <div class="text-sm text-white/70">이동</div>
+              <div class="mt-1 font-bold">JR 하루카</div>
+              <div class="text-sm text-white/75">필요 시 택시</div>
+            </div>
+            <div class="rounded-2xl bg-white/10 border border-white/15 p-4 text-white lift">
+              <div class="text-sm text-white/70">체감 날씨</div>
+              <div class="mt-1 font-bold">2월 교토 추움</div>
+              <div class="text-sm text-white/75">롱패딩 필수</div>
+            </div>
+            <div class="rounded-2xl bg-white/10 border border-white/15 p-4 text-white lift">
+              <div class="text-sm text-white/70">특별 코스</div>
+              <div class="mt-1 font-bold">오사카 당일치기</div>
+              <div class="text-sm text-white/75">도시 산책/먹방</div>
+            </div>
+          </div>
+
+          <div class="mt-8 flex items-center gap-2 text-white/75 text-sm">
+            <span class="animate-bounce">↓</span>
+            <span>스크롤하면 섹션별 카드가 순서대로 등장해.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT WRAP -->
+  <main class="mx-auto max-w-6xl px-4 py-10 space-y-14">
+
+    <!-- FLIGHT -->
+    <section id="flight" class="reveal scroll-mt-24">
+      <div class="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">항공편 & 공항 이동</h2>
+          <p class="mt-2 text-brown-700">진에어 · 공항↔교토는 JR 하루카로 깔끔하게.</p>
+        </div>
+        <div class="text-sm text-brown-700 bg-beige-100 border border-brown-900/10 rounded-2xl px-4 py-2">
+          귀국날 하루카 탑승 예상: <span class="font-bold text-brown-900">13:30</span>
+        </div>
+      </div>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-4 stagger">
+        <!-- Outbound -->
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- plane -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.18 9"/><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3-1 3 1v-1.5L13 19v-5.5z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">출국 (2/16)</div>
+              <div class="text-lg font-extrabold">인천(ICN) 08:00 → 간사이(KIX) 09:50</div>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">추천 공항 도착</div>
+              <div class="mt-1 font-bold">05:30 ~ 06:00</div>
+            </div>
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">도착 후 흐름</div>
+              <div class="mt-1 font-bold">입국 → 하루카</div>
+            </div>
+          </div>
+          <p class="mt-4 text-brown-700 text-sm">
+            가족 여행은 “짐+입국” 변수가 있으니 공항은 여유 있게. 간사이 도착 후에는 <span class="font-semibold">JR 하루카</span>로 교토까지 한 번에 이동.
+          </p>
+        </div>
+
+        <!-- Inbound -->
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- plane -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3-1 3 1v-1.5L13 19v-5.5z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">귀국 (2/19)</div>
+              <div class="text-lg font-extrabold">간사이(KIX) 14:50 → 인천(ICN) 16:50</div>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">체크아웃</div>
+              <div class="mt-1 font-bold">08:00</div>
+            </div>
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">하루카 탑승</div>
+              <div class="mt-1 font-bold">13:30</div>
+            </div>
+          </div>
+          <p class="mt-4 text-brown-700 text-sm">
+            귀국일은 오전에 카페 → 교토역 쇼핑으로 가볍게. 공항은 <span class="font-semibold">출발 2시간 전</span> 도착을 목표로 설계했어.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOTEL -->
+    <section id="hotel" class="reveal scroll-mt-24">
+      <div class="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">숙소</h2>
+          <p class="mt-2 text-brown-700">라젠트 호텔 교토 니조 · 니조역 도보권.</p>
+        </div>
+        <a class="text-sm underline text-brown-800 hover:text-brown-900"
+           href="https://www.google.com/maps/search/?api=1&query=La%27gent%20Hotel%20Kyoto%20Nijo" target="_blank" rel="noreferrer">
+          지도에서 보기 →
+        </a>
+      </div>
+
+      <div class="mt-6 grid lg:grid-cols-3 gap-4 stagger">
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift lg:col-span-2">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- hotel -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 22V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14"/><path d="M7 22V12h10v10"/><path d="M7 10h.01"/><path d="M17 10h.01"/><path d="M12 10h.01"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">호텔 정보</div>
+              <div class="text-lg font-extrabold">라젠트 호텔 교토 니조</div>
+            </div>
+          </div>
+
+          <div class="mt-5 grid sm:grid-cols-2 gap-3 text-sm">
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">Day1 짐 맡기기</div>
+              <div class="mt-1 font-bold">13:30</div>
+            </div>
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">체크인</div>
+              <div class="mt-1 font-bold">15:00</div>
+            </div>
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">체크아웃</div>
+              <div class="mt-1 font-bold">08:00 (Day4)</div>
+            </div>
+            <div class="rounded-2xl bg-beige-50 border border-brown-900/10 p-4">
+              <div class="text-brown-700">객실</div>
+              <div class="mt-1 font-bold">2개 객실 사용</div>
+            </div>
+          </div>
+
+          <p class="mt-4 text-brown-700 text-sm">
+            조식은 <span class="font-semibold">밖에서 카페</span>로 즐기는 스타일. 니조역 근처라 교토 시내/오사카 이동도 부담이 적어.
+          </p>
+        </div>
+
+        <div class="rounded-3xl bg-brown-900 text-beige-100 shadow-soft p-6 lift">
+          <div class="text-sm text-beige-200">가족여행 체크</div>
+          <div class="mt-2 text-lg font-extrabold">운영 룰</div>
+          <ul class="mt-4 space-y-3 text-sm text-beige-100/90">
+            <li class="flex gap-2"><span>•</span><span>하루 2만보 기본, 중간 휴식 2회</span></li>
+            <li class="flex gap-2"><span>•</span><span>추우면 택시 “가끔” 바로</span></li>
+            <li class="flex gap-2"><span>•</span><span>건축/자연 포인트를 우선 배치</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTY -->
+    <section id="party" class="reveal scroll-mt-24">
+      <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">여행 구성</h2>
+      <p class="mt-2 text-brown-700">“빡세게”가 아니라 “흐름 있게” — 걷되, 멋과 여유를 놓치지 않는 구성.</p>
+
+      <div class="mt-6 grid md:grid-cols-3 gap-4 stagger">
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="text-sm text-brown-700">멤버</div>
+          <div class="mt-1 text-lg font-extrabold">나 25 · 누나 28</div>
+          <div class="text-sm text-brown-700">엄마 56 · 아빠 58</div>
+        </div>
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="text-sm text-brown-700">체력</div>
+          <div class="mt-1 text-lg font-extrabold">하루 2만보 기본</div>
+          <div class="text-sm text-brown-700">휴식 포인트 2회 배치</div>
+        </div>
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="text-sm text-brown-700">이동</div>
+          <div class="mt-1 text-lg font-extrabold">대중교통 + 택시</div>
+          <div class="text-sm text-brown-700">필요할 때 가끔 택시</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ITINERARY -->
+    <section id="itinerary" class="reveal scroll-mt-24">
+      <div class="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">일정 (Day 1 ~ Day 4)</h2>
+          <p class="mt-2 text-brown-700">시간은 “현실적 초안”이야. 현장 컨디션에 맞게 +- 조정하면 딱 좋음.</p>
+        </div>
+        <div class="text-sm text-brown-700 bg-beige-100 border border-brown-900/10 rounded-2xl px-4 py-2">
+          오사카는 <span class="font-bold text-brown-900">도시 산책</span> 중심
+        </div>
+      </div>
+
+      <div class="mt-6 grid lg:grid-cols-2 gap-4 stagger">
+
+        <!-- Day 1 -->
+        <article class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="text-xs text-brown-700">Day 1 · 2/16 (월)</div>
+              <h3 class="mt-1 text-xl font-extrabold">도착 & 시내 감성</h3>
+            </div>
+            <span class="text-xs rounded-full bg-beige-100 border border-brown-900/10 px-3 py-1">교토</span>
+          </div>
+
+          <ol class="mt-4 space-y-3 text-sm">
+            <li class="flex gap-3">
+              <span class="font-bold w-14 shrink-0">09:50</span>
+              <span>간사이공항 도착 → 입국/짐</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold w-14 shrink-0">11:00</span>
+              <span>JR 하루카 탑승 → 교토 이동 (약 75~90분)</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold w-14 shrink-0">13:30</span>
+              <span>호텔 짐 맡기기 (니조) · 근처 카페로 몸 풀기</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold w-14 shrink-0">14:30</span>
+              <span>니시키 시장 점심 & 먹방</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold w-14 shrink-0">16:10</span>
+              <span>가와라마치/시조 쇼핑 산책</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold w-14 shrink-0">18:30</span>
+              <span>폰토초 저녁 (날씨 추우면 택시 가끔)</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-bold w-14 shrink-0">20:30</span>
+              <span>호텔 체크인 & 휴식 (15:00 체크인 가능)</span>
+            </li>
+          </ol>
+
+          <div class="mt-5 rounded-2xl bg-beige-50 border border-brown-900/10 p-4 text-sm text-brown-700">
+            <div class="font-semibold text-brown-900">휴식 포인트</div>
+            <div class="mt-1">니시키 → 가와라마치 사이 카페 1회 + 저녁 후 호텔에서 따뜻하게.</div>
+          </div>
+        </article>
+
+        <!-- Day 2 -->
+        <article class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="text-xs text-brown-700">Day 2 · 2/17 (화)</div>
+              <h3 class="mt-1 text-xl font-extrabold">아라시야마 & 건축/사찰</h3>
+            </div>
+            <span class="text-xs rounded-full bg-beige-100 border border-brown-900/10 px-3 py-1">교토</span>
+          </div>
+
+          <ol class="mt-4 space-y-3 text-sm">
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">08:30</span><span>아라시야마 이동 (JR/버스, 30~45분)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">09:20</span><span>아라시야마 대나무숲 산책</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">10:30</span><span>도게츠교 & 강변 풍경</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">12:00</span><span>유바 정식 점심 (사가노 유바 등)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">14:00</span><span>금각사 (이동 40~60분)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">16:00</span><span>니조성 (건축/정원 포인트)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">18:30</span><span>저녁 자유 (근처 이자카야/라멘)</span></li>
+          </ol>
+
+          <div class="mt-5 rounded-2xl bg-beige-50 border border-brown-900/10 p-4 text-sm text-brown-700">
+            <div class="font-semibold text-brown-900">추울 때 대안</div>
+            <div class="mt-1">아라시야마는 강바람이 차가워서, 중간에 실내 카페/기념품샵 휴식 1회 추천.</div>
+          </div>
+        </article>
+
+        <!-- Day 3 (Osaka) -->
+        <article class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="text-xs text-brown-700">Day 3 · 2/18 (수)</div>
+              <h3 class="mt-1 text-xl font-extrabold">오사카 당일치기 (도시 산책)</h3>
+            </div>
+            <span class="text-xs rounded-full bg-brown-900 text-beige-100 px-3 py-1">오사카</span>
+          </div>
+
+          <ol class="mt-4 space-y-3 text-sm">
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">09:30</span><span>교토 → 오사카(난바) 이동 (JR/사철, 45~60분)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">11:00</span><span>도톤보리 · 글리코 사인 · 강변 산책</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">12:30</span><span>점심 먹방 (라멘/돈카츠/타코야키)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">14:00</span><span>신사이바시 쇼핑 · 카페 휴식</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">16:30</span><span>난바 근처 자유 산책(골목/편집샵)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">19:00</span><span>교토 복귀 · 저녁 가볍게</span></li>
+          </ol>
+
+          <div class="mt-5 rounded-2xl bg-beige-50 border border-brown-900/10 p-4 text-sm text-brown-700">
+            <div class="font-semibold text-brown-900">팁</div>
+            <div class="mt-1">오사카는 “계획 적을수록” 재밌음. 동선은 난바·도톤보리·신사이바시 삼각형만 기억!</div>
+          </div>
+        </article>
+
+        <!-- Day 4 -->
+        <article class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="text-xs text-brown-700">Day 4 · 2/19 (목)</div>
+              <h3 class="mt-1 text-xl font-extrabold">체크아웃 & 귀국</h3>
+            </div>
+            <span class="text-xs rounded-full bg-beige-100 border border-brown-900/10 px-3 py-1">귀국</span>
+          </div>
+
+          <ol class="mt-4 space-y-3 text-sm">
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">08:00</span><span>체크아웃</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">08:20</span><span>아침 카페 (따뜻한 커피 + 간단 브런치)</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">10:30</span><span>교토역 쇼핑(면세/기념품) · 점심 가볍게</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">13:30</span><span>JR 하루카 탑승 → 간사이공항 이동</span></li>
+            <li class="flex gap-3"><span class="font-bold w-14 shrink-0">14:50</span><span>출국</span></li>
+          </ol>
+
+          <div class="mt-5 rounded-2xl bg-beige-50 border border-brown-900/10 p-4 text-sm text-brown-700">
+            <div class="font-semibold text-brown-900">여유 포인트</div>
+            <div class="mt-1">추우면 교토역 실내 쇼핑 비중을 늘리고, 이동은 택시 “가끔” 허용.</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- FOOD -->
+    <section id="food" class="reveal scroll-mt-24">
+      <div class="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">맛집 리스트</h2>
+          <p class="mt-2 text-brown-700">“무조건 여기”가 아니라, 동선에 맞춰 꺼내 쓰는 카드형 리스트.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
+        <!-- Card template -->
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- food -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 2h18"/><path d="M7 2v20"/><path d="M17 2v20"/><path d="M3 12h18"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">니시키 시장</div>
+              <div class="text-lg font-extrabold">니시키 시장 먹방</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-brown-700">Day1 점심 최적. 꼬치/디저트/해산물까지 한 번에.</p>
+          <a class="mt-3 inline-block text-sm underline text-brown-800 hover:text-brown-900"
+             href="https://www.google.com/maps/search/?api=1&query=Nishiki%20Market" target="_blank" rel="noreferrer">지도 →</a>
+        </div>
+
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- food -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 2h18"/><path d="M7 2v20"/><path d="M17 2v20"/><path d="M3 12h18"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">아라시야마</div>
+              <div class="text-lg font-extrabold">사가노 유바</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-brown-700">Day2 점심 추천. 따뜻하고 부드러운 유바 정식.</p>
+          <a class="mt-3 inline-block text-sm underline text-brown-800 hover:text-brown-900"
+             href="https://www.google.com/maps/search/?api=1&query=Sagano%20Yuba%20Kyoto" target="_blank" rel="noreferrer">지도 →</a>
+        </div>
+
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- food -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 2h18"/><path d="M7 2v20"/><path d="M17 2v20"/><path d="M3 12h18"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">기온/교토</div>
+              <div class="text-lg font-extrabold">이즈쥬 사바스시</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-brown-700">교토 감성 음식. 포장해도 만족도 높은 편.</p>
+          <a class="mt-3 inline-block text-sm underline text-brown-800 hover:text-brown-900"
+             href="https://www.google.com/maps/search/?api=1&query=Izuju%20Kyoto" target="_blank" rel="noreferrer">지도 →</a>
+        </div>
+
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- food -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 2h18"/><path d="M7 2v20"/><path d="M17 2v20"/><path d="M3 12h18"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">오사카/도시</div>
+              <div class="text-lg font-extrabold">돈카츠 마이센</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-brown-700">도시 산책 중 든든하게. 지점 많아 동선에 맞춰 픽.</p>
+          <a class="mt-3 inline-block text-sm underline text-brown-800 hover:text-brown-900"
+             href="https://www.google.com/maps/search/?api=1&query=Maisen%20Tonkatsu%20Osaka" target="_blank" rel="noreferrer">지도 →</a>
+        </div>
+
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="flex items-center gap-3">
+            <div class="h-11 w-11 rounded-2xl bg-brown-900 text-beige-100 grid place-items-center">
+              <!-- food -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 2h18"/><path d="M7 2v20"/><path d="M17 2v20"/><path d="M3 12h18"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm text-brown-700">라멘</div>
+              <div class="text-lg font-extrabold">이치란 라멘</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-brown-700">늦은 밤/비 올 때 안전한 선택. 웨이팅 체크.</p>
+          <a class="mt-3 inline-block text-sm underline text-brown-800 hover:text-brown-900"
+             href="https://www.google.com/maps/search/?api=1&query=Ichiran%20Ramen%20Kyoto" target="_blank" rel="noreferrer">지도 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPS -->
+    <section id="tips" class="reveal scroll-mt-24">
+      <div class="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">여행 팁</h2>
+          <p class="mt-2 text-brown-700">2월 교토는 “생각보다” 차갑다. 준비하면 체감이 완전 달라짐.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-4 stagger">
+        <div class="rounded-3xl bg-brown-900 text-beige-100 shadow-soft p-6 lift">
+          <div class="text-sm text-beige-200">필수 준비</div>
+          <ul class="mt-4 space-y-3 text-sm text-beige-100/90">
+            <li class="flex gap-2"><span>•</span><span><span class="font-semibold">롱패딩</span> + 목도리/장갑 (바람이 차가움)</span></li>
+            <li class="flex gap-2"><span>•</span><span><span class="font-semibold">현금 + 카드</span> 병행</span></li>
+            <li class="flex gap-2"><span>•</span><span><span class="font-semibold">eSIM 또는 포켓와이파이</span></span></li>
+            <li class="flex gap-2"><span>•</span><span><span class="font-semibold">핫팩 + 보조배터리</span></span></li>
+          </ul>
+        </div>
+
+        <div class="rounded-3xl bg-white border border-brown-900/10 shadow-card p-6 lift">
+          <div class="text-sm text-brown-700">현장 운영 팁</div>
+          <ul class="mt-4 space-y-3 text-sm text-brown-700">
+            <li class="flex gap-2"><span>•</span><span>“카페 휴식”을 일정에 포함시키면 하루 2만보도 부드럽게 소화됨</span></li>
+            <li class="flex gap-2"><span>•</span><span>춥거나 비 오면 택시는 아낌없이(가끔 룰) — 컨디션 유지가 우선</span></li>
+            <li class="flex gap-2"><span>•</span><span>기념품은 Day4 교토역에서 몰아서 사면 효율 최고</span></li>
+            <li class="flex gap-2"><span>•</span><span>오사카는 “난바·도톤보리·신사이바시”만 기억하면 동선 끝</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-6 pb-14 text-sm text-brown-700">
+      <div class="rounded-3xl bg-beige-100 border border-brown-900/10 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <div class="font-extrabold text-brown-900">뚱띵 패밀리의 교토 여행기</div>
+          <div class="mt-1">이 페이지는 “흐름 있는” 가족여행 일정표를 목표로 만든 단일 페이지 웹입니다.</div>
+        </div>
+        <button id="backTop" class="px-4 py-2 rounded-2xl bg-brown-900 text-beige-100 shadow-card hover:opacity-95">
+          맨 위로 ↑
+        </button>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Page transition + scroll to section
+    const wipe = document.getElementById('wipe');
+    const navButtons = document.querySelectorAll('.navBtn');
+    function goTo(targetSel){
+      const el = document.querySelector(targetSel);
+      if(!el) return;
+
+      // close mobile menu if open
+      if(mobileMenu && !mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+
+      wipe.classList.add('show');
+      // small delay for "page change" feel
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 140);
+
+      // hide overlay
+      setTimeout(() => wipe.classList.remove('show'), 380);
+    }
+    navButtons.forEach(btn=>{
+      btn.addEventListener('click', () => goTo(btn.dataset.target));
+    });
+
+    // Back to top
+    document.getElementById('backTop')?.addEventListener('click', () => goTo('#hero'));
+
+    // Progress bar
+    const progress = document.getElementById('progress');
+    function updateProgress(){
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docH = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const p = docH > 0 ? (scrollTop / docH) * 100 : 0;
+      progress.style.width = p + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    // Reveal on scroll (IntersectionObserver)
+    const reveals = document.querySelectorAll('.reveal, .stagger');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach((e)=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el=>io.observe(el));
+
+    // Active section indicator (left dots)
+    const sectionIds = ['#hero','#flight','#hotel','#party','#itinerary','#food','#tips'];
+    const dots = document.querySelectorAll('aside .dot');
+    const sectionEls = sectionIds.map(sel => document.querySelector(sel)).filter(Boolean);
+
+    const io2 = new IntersectionObserver((entries)=>{
+      entries.forEach((entry)=>{
+        if(entry.isIntersecting){
+          const id = '#' + entry.target.id;
+          const idx = sectionIds.indexOf(id);
+          dots.forEach(d=>d.classList.remove('active'));
+          if(idx >= 0 && dots[idx]) dots[idx].classList.add('active');
+        }
+      });
+    }, { threshold: 0.45 });
+    sectionEls.forEach(el => io2.observe(el));
+  </script> 
+</body>
+</html>
+
